@@ -1,4 +1,3 @@
-
 -- Create categories table
 create table categories
 (

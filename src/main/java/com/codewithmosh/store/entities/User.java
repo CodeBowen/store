@@ -50,7 +50,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private Set<Product> products = new HashSet<>();
+    private Set<Product> wishList = new HashSet<>();
 
     public void addAddress(Address address) {
         addresses.add(address);
@@ -77,9 +77,5 @@ public class User {
     public void addProfile(Profile profile) {
         this.profile = profile;
         profile.setUser(this);
-    }
-
-    public  void addToWishlist(Product product) {
-        products.add(product);
     }
 }

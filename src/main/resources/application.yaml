@@ -2,11 +2,12 @@ spring:
   application:
     name: store
   datasource:
-    url: jdbc:mysql://localhost:3306/store?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/store_temp2?createDatabaseIfNotExist=true
     username: root
     password: 6886375
   jpa:
-    show-sql: true
+    hibernate:
+      ddl-auto: create
 
 
 

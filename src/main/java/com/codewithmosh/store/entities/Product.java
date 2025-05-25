@@ -1,19 +1,15 @@
 package com.codewithmosh.store.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@ToString
-
 @Entity
 @Table(name = "products")
 public class Product {
@@ -22,17 +18,17 @@ public class Product {
     @Column(name = "id")
     private Long id;
 
+    @ManyToOne()
+    @JoinColumn(name = "categories_id")
+    private Category categories;
+
     @Column(name = "name")
     private String name;
 
-    @Column (name = "description")
-    private String description;
-
-    @Column (name ="price")
+    @Column(name = "price")
     private BigDecimal price;
 
-    @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @JoinColumn(name = "categories_id")
-    @ToString.Exclude
-    private Category category;
+    @Column(name = "description")
+    private String description;
+
 }
