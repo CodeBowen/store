@@ -1,14 +1,18 @@
 package com.codewithmosh.store.services;
 
 import com.codewithmosh.store.entities.Address;
+import com.codewithmosh.store.entities.Category;
 import com.codewithmosh.store.entities.User;
 import com.codewithmosh.store.repositories.AddressRepository;
+import com.codewithmosh.store.repositories.ProductRepository;
 import com.codewithmosh.store.repositories.ProfileRepository;
 import com.codewithmosh.store.repositories.UserRepository;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.SQLOutput;
 
 @AllArgsConstructor
 @Service
@@ -17,6 +21,7 @@ public class UserService {
     private final ProfileRepository profileRepository;
     private final EntityManager entityManager;
     private final AddressRepository addressRepository;
+    private final ProductRepository productRepository;
 
     @Transactional
     public void showEntityState() {
@@ -58,7 +63,7 @@ public class UserService {
         System.out.println(address.getCity());
     }
 
-    public void persistRelated () {
+    public void persistRelated() {
         var user = User.builder()
                 .name("John Doe")
                 .email("john.doe@example.com")
@@ -86,5 +91,21 @@ public class UserService {
         var address = user.getAddresses().getFirst();
         user.removeAddress(address);
         userRepository.save(user);
+    }
+
+    public void fetchProducts() {
+        var products = productRepository.findByCategories(new Category((byte) 1));
+        products.forEach(System.out::println);
+    }
+
+    @Transactional
+    public void fetchUsers() {
+        var users = userRepository.findUsersWithAddress();
+        users.forEach(user -> {
+                    System.out.println(user);
+                    user.getAddresses().forEach(System.out::println);
+                }
+
+        );
     }
 }
